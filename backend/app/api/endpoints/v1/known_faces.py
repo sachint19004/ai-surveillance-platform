@@ -1,13 +1,5 @@
 from fastapi import APIRouter, Depends, HTTPException
-from sqlalchemy.orm import Session
 
-from app.database.session import get_db
-from app.schemas.known_face import KnownFaceResponse
-from app.services.known_faces.service import (
-    delete_known_face,
-    get_known_face,
-    get_known_faces,
-)
 import cv2
 import numpy as np
 
@@ -31,6 +23,7 @@ from app.services.known_faces.service import (
     delete_known_face,
     get_known_face,
     get_known_faces,
+    toggle_face_status,
 )
 
 router = APIRouter()
@@ -126,3 +119,24 @@ def create_face(
             status_code=400,
             detail=str(e),
         )
+    
+@router.patch(
+    "/{face_id}/status",
+    response_model=KnownFaceResponse,
+)
+def update_face_status(
+    face_id: int,
+    db: Session = Depends(get_db),
+):
+    face = toggle_face_status(
+        db=db,
+        face_id=face_id,
+    )
+
+    if face is None:
+        raise HTTPException(
+            status_code=404,
+            detail="Known face not found",
+        )
+
+    return face

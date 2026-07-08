@@ -57,3 +57,22 @@ def delete_known_face(
     db.commit()
 
     return face
+
+def toggle_face_status(
+    db: Session,
+    face_id: int,
+):
+    face = get_known_face(
+        db,
+        face_id,
+    )
+
+    if face is None:
+        return None
+
+    face.is_active = not face.is_active
+
+    db.commit()
+    db.refresh(face)
+
+    return face
