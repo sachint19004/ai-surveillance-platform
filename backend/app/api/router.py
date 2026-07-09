@@ -4,6 +4,7 @@ from app.api.endpoints.v1 import health
 from app.api.endpoints.v1 import auth
 from app.api.endpoints.v1 import known_faces
 from app.api.endpoints.v1 import recognition
+from app.api.endpoints.v1 import cameras
 
 api_router = APIRouter(prefix="/api/v1")
 
@@ -25,4 +26,10 @@ api_router.include_router(
     recognition.router,
     prefix="/recognition",
     tags=["Recognition"],
+)
+
+api_router.include_router(
+    cameras.router,
+    prefix="/cameras",
+    tags=["Cameras"],
 )
