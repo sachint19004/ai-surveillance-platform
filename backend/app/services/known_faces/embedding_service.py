@@ -24,3 +24,10 @@ def generate_embedding(image):
     embedding = faces[0].embedding.astype(np.float32)
 
     return embedding.tobytes()
+
+def detect_faces(image):
+    """
+    Returns all detected faces from an image.
+    """
+
+    return app.get(image)

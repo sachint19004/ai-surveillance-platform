@@ -8,6 +8,7 @@ from app.api.endpoints.v1 import cameras
 from app.api.endpoints.v1 import stream
 from app.api.endpoints.v1 import live
 from app.api.endpoints.v1 import worker
+from app.api.endpoints.v1 import video
 
 api_router = APIRouter(prefix="/api/v1")
 
@@ -53,4 +54,10 @@ api_router.include_router(
     worker.router,
     prefix="/worker",
     tags=["Recognition Worker"],
+)
+
+api_router.include_router(
+    video.router,
+    prefix="/video",
+    tags=["Live Video"],
 )
