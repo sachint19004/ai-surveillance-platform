@@ -29,3 +29,20 @@ def recognize_face(
         embedding,
         known_faces,
     )
+
+def recognize_frame(
+    db: Session,
+    frame,
+):
+    embedding = generate_embedding(frame)
+
+    known_faces = (
+        db.query(KnownFace)
+        .filter(KnownFace.is_active == True)
+        .all()
+    )
+
+    return find_best_match(
+        embedding,
+        known_faces,
+    )

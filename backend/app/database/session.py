@@ -10,7 +10,8 @@ engine = create_engine(
     settings.DATABASE_URL,
     echo=settings.DEBUG,
 )
-
+def get_db_session():
+    return SessionLocal()
 # Session Factory
 SessionLocal = sessionmaker(
     bind=engine,
