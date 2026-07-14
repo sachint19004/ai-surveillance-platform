@@ -5,6 +5,7 @@ from sqlalchemy.orm import Session
 
 from app.services.cameras.stream_manager import camera_manager
 from app.services.recognition.recognizer import recognize_frame
+from app.services.events.service import log_recognition_event
 
 
 class RecognitionWorker:
@@ -70,12 +71,26 @@ class RecognitionWorker:
                     frame,
                 )
 
+                log_recognition_event(
+                    db=db,
+                    camera_id=camera_id,
+                    face=face,
+                    score=score,
+                )
+
                 if face:
 
                     print(
                         f"[Camera {camera_id}] "
                         f"{face.name} "
                         f"({score:.3f})"
+                    )
+
+                else:
+
+                    print(
+                        f"[Camera {camera_id}] "
+                        f"UNKNOWN"
                     )
 
             except Exception as e:

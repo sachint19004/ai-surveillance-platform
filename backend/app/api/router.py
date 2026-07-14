@@ -9,6 +9,7 @@ from app.api.endpoints.v1 import stream
 from app.api.endpoints.v1 import live
 from app.api.endpoints.v1 import worker
 from app.api.endpoints.v1 import video
+from app.api.endpoints.v1 import events
 
 api_router = APIRouter(prefix="/api/v1")
 
@@ -60,4 +61,10 @@ api_router.include_router(
     video.router,
     prefix="/video",
     tags=["Live Video"],
+)
+
+api_router.include_router(
+    events.router,
+    prefix="/events",
+    tags=["Events"],
 )
